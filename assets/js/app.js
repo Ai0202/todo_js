@@ -24,6 +24,13 @@ let doneIcon = '<i class="far fa-check-circle fa-lg"></i>';
     remove.classList.add('remove');
     remove.innerHTML = removeIcon;
 
+    //削除ボタンをクリック
+    remove.addEventListener('click', function() {
+      let task = this.parentNode.parentNode;
+
+      task.remove();
+    })
+
     //完了ボタン作成
     let done = document.createElement('button');
     done.classList.add('done');
@@ -39,3 +46,15 @@ let doneIcon = '<i class="far fa-check-circle fa-lg"></i>';
     document.getElementById('task').value = '';
 
   })
+
+
+
+  //未完了を完了にする処理
+  //完了ボタンをクリックする
+  //完了一覧に追加
+  //未完了一覧から削除
+
+
+  //未完了を削除する処理
+  //削除ボタンをクリック
+  //未完了一覧から削除
