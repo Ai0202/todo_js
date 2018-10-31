@@ -36,6 +36,18 @@ let doneIcon = '<i class="far fa-check-circle fa-lg"></i>';
     done.classList.add('done');
     done.innerHTML = doneIcon;
 
+    done.addEventListener('click', function() {
+      let task = this.parentNode.parentNode;
+      console.log(task);
+
+      //完了一覧に追加
+      let target = document.getElementById('done');
+      target.appendChild(task);
+
+      //未完了一覧から削除
+
+    })
+
     //ユーザーが入力した内容を未完了一覧に追加
     buttons.appendChild(remove);
     buttons.appendChild(done);
@@ -51,8 +63,7 @@ let doneIcon = '<i class="far fa-check-circle fa-lg"></i>';
 
   //未完了を完了にする処理
   //完了ボタンをクリックする
-  //完了一覧に追加
-  //未完了一覧から削除
+
 
 
   //未完了を削除する処理
