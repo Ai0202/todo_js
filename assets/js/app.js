@@ -107,6 +107,10 @@ function removeTask() {
 function doneTask() {
   let task = this.parentNode.parentNode;
   let id = task.parentNode.id;
+  if (id !== 'not-yet') {
+    return;
+  }
+
   let value = task.textContent;
 
   //完了一覧に追加
