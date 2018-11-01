@@ -49,6 +49,9 @@ if (localStorage.getItem('todoList')) {
   //引数にユーザーが入力したtaskを入れる
   //仮引数の名前はtaskName
 
+// --------------関数---------------
+
+
   function addTaskToDOM(taskName) {
     //追加する要素を作成
     let not = document.createElement('li');
@@ -66,27 +69,14 @@ if (localStorage.getItem('todoList')) {
     remove.innerHTML = removeIcon;
 
     //削除ボタンをクリック
-    remove.addEventListener('click', function() {
-      let task = this.parentNode.parentNode;
-
-      task.remove();
-    })
+    remove.addEventListener('click', removeTask);
 
     //完了ボタン作成
     let done = document.createElement('button');
     done.classList.add('done');
     done.innerHTML = doneIcon;
 
-
-    done.addEventListener('click', function() {
-      let task = this.parentNode.parentNode;
-
-      //完了一覧に追加
-      //未完了一覧から削除
-      let target = document.getElementById('done');
-      target.appendChild(task);
-
-    })
+    done.addEventListener('click', doneTask)
 
     //ユーザーが入力した内容を未完了一覧に追加
     buttons.appendChild(remove);
@@ -95,15 +85,26 @@ if (localStorage.getItem('todoList')) {
     document.getElementById('not-yet').appendChild(not);
   }
 
+function removeTask() {
+  let task = this.parentNode.parentNode;
+  task.remove();
+}
 
+function doneTask() {
+  let task = this.parentNode.parentNode;
+  let id = task.parentNode.id;
+  let value = task.textContent;
 
-//なぜ完了一覧から消えたか
-//ドキュメントの確認方法
-// 関数
+  //完了一覧に追加
+  //未完了一覧から削除
+  let target = document.getElementById('done');
+  target.appendChild(task);
+
+  //DBを更新
+  data.not.splice(data.not.indexOf(value), 1);
+  data.done.push(value);
+  localStorage.setItem('todoList', JSON.stringify(data));
+
+}
+
 //
-
-// - 画面をリロードしても消えないようにする処理
-  /*
-    データを保存 OK
-    保存したデータを画面に表示する処理
-  */
