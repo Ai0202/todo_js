@@ -41,7 +41,7 @@ if (localStorage.getItem('todoList')) {
     data.not.push(taskName);
 
     //配列をDBに保存
-    localStorage.setItem('todoList', JSON.stringify(data));
+    dataObjectUpdated();
 
   })
 
@@ -103,8 +103,12 @@ function doneTask() {
   //DBを更新
   data.not.splice(data.not.indexOf(value), 1);
   data.done.push(value);
-  localStorage.setItem('todoList', JSON.stringify(data));
+  dataObjectUpdated();
 
+}
+
+function dataObjectUpdated() {
+  localStorage.setItem('todoList', JSON.stringify(data));
 }
 
 //
