@@ -7,10 +7,7 @@ if (localStorage.getItem('todoList')) {
   //データを取り出す
   data = JSON.parse(localStorage.getItem('todoList'));
 
-  //取得したデータを画面に表示する
-  for (let taskName of data.not) {
-    addTaskToDOM(taskName);
-  }
+  renderTodoList();
 
 } else { //そうでなければ
   //データの保存先を作成
@@ -52,11 +49,17 @@ if (localStorage.getItem('todoList')) {
 // --------------関数---------------
 
 
-  function addTaskToDOM(taskName) {
+  function addTaskToDOM(taskName, isDone) {
+    let list;
+    if (isDone) {
+      list = document.getElementById('done');
+    } else {
+      list = document.getElementById('not-yet');
+    }
+
+
     //追加する要素を作成
     let not = document.createElement('li');
-    // let text = document.createTextNode(taskName);
-    // not.appendChild(text);
     not.textContent = taskName;
 
     //ボタンを表示する場所
@@ -82,7 +85,7 @@ if (localStorage.getItem('todoList')) {
     buttons.appendChild(remove);
     buttons.appendChild(done);
     not.appendChild(buttons);
-    document.getElementById('not-yet').appendChild(not);
+    list.appendChild(not);
   }
 
 function removeTask() {
@@ -117,4 +120,14 @@ function dataObjectUpdated() {
   localStorage.setItem('todoList', JSON.stringify(data));
 }
 
-//
+function renderTodoList() {
+  //未完了一覧
+  for (let taskName of data.not) {
+    addTaskToDOM(taskName, false);
+  }
+
+  //完了一覧
+  for (let taskName of data.done) {
+    addTaskToDOM(taskName, true);
+  }
+}
