@@ -66,20 +66,9 @@ if (localStorage.getItem('todoList')) {
     let buttons = document.createElement('div');
     buttons.classList.add('buttons');
 
-    //削除ボタン作成
-    let remove = document.createElement('button');
-    remove.classList.add('remove');
-    remove.innerHTML = removeIcon;
+    let remove = createRemoveBtn();
 
-    //削除ボタンをクリック
-    remove.addEventListener('click', removeTask);
-
-    //完了ボタン作成
-    let done = document.createElement('button');
-    done.classList.add('done');
-    done.innerHTML = doneIcon;
-
-    done.addEventListener('click', doneTask)
+    let done = createDoneBtn();
 
     //ユーザーが入力した内容を未完了一覧に追加
     buttons.appendChild(remove);
@@ -87,6 +76,26 @@ if (localStorage.getItem('todoList')) {
     not.appendChild(buttons);
     list.appendChild(not);
   }
+
+function createRemoveBtn() {
+    let remove = document.createElement('button');
+    remove.classList.add('remove');
+    remove.innerHTML = removeIcon;
+
+    remove.addEventListener('click', removeTask);
+
+    return remove;
+}
+
+function createDoneBtn() {
+  let done = document.createElement('button');
+  done.classList.add('done');
+  done.innerHTML = doneIcon;
+
+  done.addEventListener('click', doneTask)
+  
+  return done;
+}
 
 function removeTask() {
   let task = this.parentNode.parentNode;
