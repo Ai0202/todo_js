@@ -19,28 +19,28 @@ if (localStorage.getItem('todoList')) {
 
 // Todoを画面に追加する処理
 
-  //追加ボタンをクリック
-  let add = document.getElementById('add');
-  add.addEventListener('click', function() {
-    //ユーザーが入力した内容を取得
-    let taskName = document.getElementById('task').value;
+//追加ボタンをクリック
+let add = document.getElementById('add');
+add.addEventListener('click', function() {
+  //ユーザーが入力した内容を取得
+  let taskName = document.getElementById('task').value;
 
-    addTaskToDOM(taskName);
+  addTaskToDOM(taskName);
 
-    //ユーザーが入力した内容を消す
-    document.getElementById('task').value = '';
+  //ユーザーが入力した内容を消す
+  document.getElementById('task').value = '';
 
-    //データ保存
-    //配列にデータを追加
-    //taskName
-    //連想配列dataのnotに追加したい
-    //末尾に追加するときのメソッド push
-    data.not.push(taskName);
+  //データ保存
+  //配列にデータを追加
+  //taskName
+  //連想配列dataのnotに追加したい
+  //末尾に追加するときのメソッド push
+  data.not.push(taskName);
 
-    //配列をDBに保存
-    dataObjectUpdated();
+  //配列をDBに保存
+  dataObjectUpdated();
 
-  })
+})
 
   //関数名 addTaskToDOM
   //引数にユーザーが入力したtaskを入れる
@@ -49,33 +49,41 @@ if (localStorage.getItem('todoList')) {
 // --------------関数---------------
 
 
-  function addTaskToDOM(taskName, isDone) {
-    let list;
-    if (isDone) {
-      list = document.getElementById('done');
-    } else {
-      list = document.getElementById('not-yet');
-    }
-
-
-    //追加する要素を作成
-    let not = document.createElement('li');
-    not.textContent = taskName;
-
-    //ボタンを表示する場所
-    let buttons = document.createElement('div');
-    buttons.classList.add('buttons');
-
-    let remove = createRemoveBtn();
-
-    let done = createDoneBtn();
-
-    //ユーザーが入力した内容を未完了一覧に追加
-    buttons.appendChild(remove);
-    buttons.appendChild(done);
-    not.appendChild(buttons);
-    list.appendChild(not);
+function addTaskToDOM(taskName, isDone) {
+  let list;
+  if (isDone) {
+    list = document.getElementById('done');
+  } else {
+    list = document.getElementById('not-yet');
   }
+
+  let not = createItem(taskName);
+
+  let buttons = createBtnArea();
+
+  let remove = createRemoveBtn();
+
+  let done = createDoneBtn();
+
+  buttons.appendChild(remove);
+  buttons.appendChild(done);
+  not.appendChild(buttons);
+  list.appendChild(not);
+}
+
+function createItem(taskName) {
+  let not = document.createElement('li');
+  not.textContent = taskName;
+
+  return not;
+}
+
+function createBtnArea() {
+  let buttons = document.createElement('div');
+  buttons.classList.add('buttons');
+
+  return buttons;
+}
 
 function createRemoveBtn() {
     let remove = document.createElement('button');
