@@ -90,12 +90,17 @@ if (localStorage.getItem('todoList')) {
 
 function removeTask() {
   let task = this.parentNode.parentNode;
+  let id = task.parentNode.id;
   let value = task.textContent;
+
   task.remove();
 
   //DBから削除
-  data.not.splice(data.not.indexOf(value), 1);
-
+  if (id === 'not-yet') {
+    data.not.splice(data.not.indexOf(value), 1);
+  } else {
+    data.done.splice(data.done.indexOf(value), 1);
+  }
   dataObjectUpdated();
 }
 
