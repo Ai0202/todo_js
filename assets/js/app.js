@@ -1,5 +1,24 @@
 let removeIcon = '<i class="far fa-trash-alt fa-lg"></i>';
 let doneIcon = '<i class="far fa-check-circle fa-lg"></i>';
+let data;
+
+//もしデータが保存されていれば
+if (localStorage.getItem('todoList')) {
+  //データを取り出す
+  data = JSON.parse(localStorage.getItem('todoList'));
+
+  //取得したデータを画面に表示する
+  for (let taskName of data.not) {
+    addTaskToDOM(taskName);
+  }
+
+} else { //そうでなければ
+  //データの保存先を作成
+  data = {
+    not: [],
+    done: []
+  };
+}
 
 // Todoを画面に追加する処理
 
@@ -9,6 +28,28 @@ let doneIcon = '<i class="far fa-check-circle fa-lg"></i>';
     //ユーザーが入力した内容を取得
     let taskName = document.getElementById('task').value;
 
+    addTaskToDOM(taskName);
+
+    //ユーザーが入力した内容を消す
+    document.getElementById('task').value = '';
+
+    //データ保存
+    //配列にデータを追加
+    //taskName
+    //連想配列dataのnotに追加したい
+    //末尾に追加するときのメソッド push
+    data.not.push(taskName);
+
+    //配列をDBに保存
+    localStorage.setItem('todoList', JSON.stringify(data));
+
+  })
+
+  //関数名 addTaskToDOM
+  //引数にユーザーが入力したtaskを入れる
+  //仮引数の名前はtaskName
+
+  function addTaskToDOM(taskName) {
     //追加する要素を作成
     let not = document.createElement('li');
     // let text = document.createTextNode(taskName);
@@ -36,15 +77,14 @@ let doneIcon = '<i class="far fa-check-circle fa-lg"></i>';
     done.classList.add('done');
     done.innerHTML = doneIcon;
 
+
     done.addEventListener('click', function() {
       let task = this.parentNode.parentNode;
-      console.log(task);
 
       //完了一覧に追加
+      //未完了一覧から削除
       let target = document.getElementById('done');
       target.appendChild(task);
-
-      //未完了一覧から削除
 
     })
 
@@ -53,19 +93,17 @@ let doneIcon = '<i class="far fa-check-circle fa-lg"></i>';
     buttons.appendChild(done);
     not.appendChild(buttons);
     document.getElementById('not-yet').appendChild(not);
-
-    //ユーザーが入力した内容を消す
-    document.getElementById('task').value = '';
-
-  })
+  }
 
 
 
-  //未完了を完了にする処理
-  //完了ボタンをクリックする
+//なぜ完了一覧から消えたか
+//ドキュメントの確認方法
+// 関数
+//
 
-
-
-  //未完了を削除する処理
-  //削除ボタンをクリック
-  //未完了一覧から削除
+// - 画面をリロードしても消えないようにする処理
+  /*
+    データを保存 OK
+    保存したデータを画面に表示する処理
+  */
